@@ -313,6 +313,7 @@ def createTrainingSet(years, saveYears):
     for year in years:
         team_vectors = createSeasonDict(year)
         season = reg_season_compact_pd[reg_season_compact_pd['Season'] == year]
+        print('Creating training set for:', year)
         numGamesInSeason = len(season.index)
         tourney = tourney_compact_pd[tourney_compact_pd['Season'] == year]
         numGamesInSeason += len(tourney.index)
@@ -376,7 +377,7 @@ except NameError:
 
 endYear = int(input('What year do you have data until?\n'))
 
-years = range(1993,endYear + 1)
+years = range(2015,endYear + 1)
 # Saves the team vectors for the following years
 saveYears = range(endYear - 4,endYear + 1)
 if os.path.exists("Data/PrecomputedMatrices/xTrain.npy") and os.path.exists("Data/PrecomputedMatrices/yTrain.npy"):

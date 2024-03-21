@@ -36,7 +36,7 @@ from sklearn.metrics import classification_report
 from sklearn.calibration import CalibratedClassifierCV
 import urllib
 from sklearn.svm import LinearSVC
-import xgboost as xgb
+# import xgboost as xgb
 from sklearn.model_selection import GridSearchCV
 from datetime import datetime
 import random
@@ -117,7 +117,7 @@ def createPrediction(stage2 = False):
 		localPd = sample_sub_pd2
 	else:
 		# The years that we want to predict for
-		years = range(curYear - 4,curYear)
+		years = [y for y in range(curYear - 4,curYear)]
 		localPd = sample_sub_pd
 
 	if os.path.exists("result.csv"):
@@ -131,7 +131,7 @@ def createPrediction(stage2 = False):
 
 	for index, row in localPd.iterrows():
 		matchupId = row['ID']
-		year = int(matchupId[0:4]) 
+		year = int(matchupId[0:4])
 		teamVectors = listDictionaries[year - years[0]]
 		team1Id = int(matchupId[5:9])
 		team2Id = int(matchupId[10:14])
@@ -150,7 +150,7 @@ def createPrediction(stage2 = False):
 		writer.writerows(firstRow)
 		writer.writerows(results)
 
-#createPrediction()
+# createPrediction()
 createPrediction(stage2=True)
 
 ############################## PREDICTING THIS YEAR'S BRACKET ##############################
@@ -185,27 +185,61 @@ def findWinner(team1, team2, modelUsed):
 		print ("Probability that {0} wins: {1}".format(team1, prediction))
 
 
-'''
+
 trainedModel = trainModel()
 # First round games in the East for example
-
-randomWinner('Duke', 'NC Central', trainedModel)
-randomWinner('VA Commonwealth', 'UCF', trainedModel)
-randomWinner('Mississippi St', 'Liberty', trainedModel)
-randomWinner('Virginia Tech', 'St Louis', trainedModel)
-randomWinner('Maryland', 'Belmont', trainedModel)
-randomWinner('LSU', 'Yale', trainedModel)
-randomWinner('Louisville', 'Minnesota', trainedModel)
-randomWinner('Michigan St', 'Bradley', trainedModel)
+#
+# randomWinner('Duke', 'NC Central', trainedModel)
+# randomWinner('VA Commonwealth', 'UCF', trainedModel)
+# randomWinner('Mississippi St', 'Liberty', trainedModel)
+# randomWinner('Virginia Tech', 'St Louis', trainedModel)
+# randomWinner('Maryland', 'Belmont', trainedModel)
+# randomWinner('LSU', 'Yale', trainedModel)
+# randomWinner('Louisville', 'Minnesota', trainedModel)
+# randomWinner('Michigan St', 'Bradley', trainedModel)
 
 # First round games in the South for example
 
-findWinner('Virginia', 'Gardner Webb', trainedModel)
-findWinner('Mississippi', 'Oklahoma', trainedModel)
-findWinner('Wisconsin', 'Oregon', trainedModel)
-findWinner('Kansas St', 'UC Irvine', trainedModel)
-findWinner('Villanova', 'St Mary\'s CA', trainedModel)
-findWinner('Purdue', 'Old Dominion', trainedModel)
-findWinner('Cincinnati', 'Iowa', trainedModel)
-findWinner('Colgate', 'Tennessee', trainedModel)
-'''
+findWinner('Houston', 'Longwood', trainedModel)
+findWinner('Nebraska', 'Texas A&M', trainedModel)
+findWinner('Wisconsin', 'James Madison', trainedModel)
+findWinner('Duke', 'Vermont', trainedModel)
+findWinner('Texas Tech', 'NC State', trainedModel)
+findWinner('Kentucky', 'Oakland', trainedModel)
+findWinner('Florida', 'Boise St', trainedModel)
+
+# First round games in the Midwest for example
+# perdue vs kentucky
+# Utah St vs TCU
+# Gonzaga vs McNeese
+# Kansas vs Samford
+# South Carolina vs Oregon
+# Creighton vs Akron
+# Texas vs Colorado St
+# Tennessee vs Saint Peters
+
+findWinner('Purdue', 'Kentucky', trainedModel)
+findWinner('Utah St', 'TCU', trainedModel)
+findWinner('Gonzaga', 'McNeese St', trainedModel)
+findWinner('Kansas', 'Samford', trainedModel)
+findWinner('South Carolina', 'Oregon', trainedModel)
+findWinner('Creighton', 'Akron', trainedModel)
+findWinner('Texas', 'Colorado St', trainedModel)
+findWinner('Tennessee', 'St Peter\'s', trainedModel)
+
+# Uconn vs Stetson
+# FAU vs North Western
+# San Diego St vs UAB
+# Auburn vs Yale
+# BYU vs Duquesne
+#Illinois vs Morehead St
+# Washington St vs Drake
+# Iowa St vs S Dakota St
+
+findWinner('Connecticut', 'Stetson', trainedModel)
+findWinner('San Diego St', 'UAB', trainedModel)
+findWinner('Auburn', 'Yale', trainedModel)
+findWinner('BYU', 'Duquesne', trainedModel)
+findWinner('Illinois', 'Morehead St', trainedModel)
+findWinner('Washington St', 'Drake', trainedModel)
+findWinner('Iowa St', 'S Dakota St', trainedModel)
